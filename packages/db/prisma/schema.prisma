@@ -14,10 +14,37 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(cuid())
-  email     String  @unique
-  name      String?
-  password  String
+  id                 String               @id @default(cuid())
+  email              String               @unique
+  name               String?
+  password           String
+  Balance            Balance[]
+  onRampTransactions onRampTransactions[]
+}
+
+model Balance {
+  id     String @id @default(cuid())
+  amount Int    @default(0)
+  locked Int
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model onRampTransactions {
+  id        String       @id @default(cuid())
+  userId    String
+  amount    Int
+  provider  String
+  status    onRampStatus
+  token     String
+  startTime DateTime
+  user      User         @relation(fields: [userId], references: [id])
+}
+
+enum onRampStatus {
+  success
+  failed
+  pending
 }
 
 model merchant {
