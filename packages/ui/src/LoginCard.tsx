@@ -1,9 +1,10 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useState, ChangeEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
 
 const LoginCard = () => {
   const router = useRouter();
@@ -20,8 +21,8 @@ const LoginCard = () => {
         redirect: false,
       });
       console.log(res);
-      const session = useSession();
-      if (session.data?.user) router.push("/dashboard");
+      if(res?.status===200)
+      router.push("/dashboard");
       else console.log("not correct");
     } catch (e) {
       console.log(e);
@@ -105,3 +106,4 @@ const Inputlabel = ({ type, label, placeholder, onChange }: Inputs) => {
 function getServerSession() {
   throw new Error("Function not implemented.");
 }
+
