@@ -7,7 +7,7 @@ async function main() {
     update: {},
     create: {
       email: 'revanth@gmail.com',
-      password: 'revanth',
+      password: '',
       name: 'revanth',
       onRampTransactions: {
         create: {
@@ -25,7 +25,7 @@ async function main() {
     update: {},
     create: {
       email: 'bandi@gmail.com',
-      password: 'bandi',
+      password: '',
       name: 'bandi',
       onRampTransactions: {
         create: {

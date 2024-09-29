@@ -3,8 +3,9 @@ import { Button } from "@repo/ui/button";
 import { Card } from "@repo/ui/card";
 import { TextInput } from "@repo/ui/textinput";
 import React, { useState } from "react";
+import { p2pTransfer } from "../app/lib/actions/p2pTransfer";
 
-interface p2pInputType {
+export interface p2pInputType {
   email: string;
   amount: number;
 }
@@ -14,21 +15,24 @@ export const P2PTransferCard = () => {
     email: "",
     amount: 0,
   });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
   return (
-    <Card title="p2ptransfer">
+    <Card title="P2P Transfer">
       <div className="w-full">
         <TextInput
-          label={"Amount"}
-          placeholder={"Amount"}
+          label={"Email"}
+          placeholder={"Email"}
           onChange={(e) => {
-            setInput((prev) => ({ ...prev, amount: Number(e) * 100 }));
+            setInput((prev) => ({ ...prev, email: e }));
           }}
         />
         <TextInput
           label={"Amount"}
           placeholder={"Amount"}
           onChange={(e) => {
-            setInput((prev) => ({ ...prev, amount: Number(e) * 100 }));
+            setInput((prev) => ({ ...prev, amount: Number(e) * 100 })); // Assuming amount is in cents
           }}
         />
       </div>
@@ -36,12 +40,22 @@ export const P2PTransferCard = () => {
       <div className="flex justify-center pt-4">
         <Button
           onClick={async () => {
-            window.location.href = "";
+            try {
+              setErrorMessage(null); 
+              setSuccessMessage(null);
+              await p2pTransfer(input);
+              setSuccessMessage("Transfer successful!");
+            } catch (error) {
+              setErrorMessage("Transfer failed: " + (error as Error).message);
+            }
           }}
         >
-          Add Money
+          Transfer Money
         </Button>
       </div>
+
+      {errorMessage && <div className="text-red-500 mt-4">{errorMessage}</div>}
+      {successMessage && <div className="text-green-500 mt-4">{successMessage}</div>}
     </Card>
   );
 };

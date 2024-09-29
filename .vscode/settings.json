@@ -6,11 +6,14 @@
         "Inputlabel",
         "NEXTAUTH",
         "ptransfer",
+        "Ptxns",
         "revanth",
         "Signin",
         "Signout",
         "Signup",
         "textinput",
-        "Turborepo"
+        "Tranfers",
+        "Turborepo",
+        "Txns"
     ]
 }
